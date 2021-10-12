@@ -1,7 +1,6 @@
 <template>
     <div class="carousel">
         <slot></slot>
-
         <button @click="next" class="next">Next</button>
         <button @click="prev" class="prev">Prev</button>
     </div>

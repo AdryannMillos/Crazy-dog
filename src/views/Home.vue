@@ -29,10 +29,22 @@ export default {
             ],
             visibleSlide: 0,
             direction: "",
-            carouselRunning: true,
+            carouselRuns: true,
            
         }
     },
+	mounted: function(){
+		this.runCarousel();
+	},
+	watch:{
+		carouselRuns: function(val){
+			if(val){
+				this.runCarousel();
+			} else{
+				this.stopCarousel();
+			}
+		}
+	},
     methods: {
       next(){
         if(this.visibleSlide >= this.slides.length -1){
@@ -41,7 +53,6 @@ export default {
           this.visibleSlide++
         }
         this.direction = "left"
-
       },
       prev(){
         if(this.visibleSlide <= 0){
@@ -52,34 +63,21 @@ export default {
         this.direction = "right";
       },
       mouseover(){
-        this.carouselRunning = false
+        this.carouselRuns = false
       },
       mouseleave(){
-        this.carouselRunning = true
+        this.carouselRuns = true
       },
-      running(){
-         if(this.carouselRunning == true){
-        var running = setInterval(() => this.next(), 2000);
-        running
-      }else{
-        clearInterval(running)
-      }
-      }
-     
+	runCarousel(){
+        this.carouselInterval = setInterval(() => this.next(), 2000);
+      },
+	stopCarousel(){
+		clearInterval(this.carouselInterval);
     },
-    
-    
-     
-     
-    
-    
-    
-   
-     
-     
+    },
     components : {
-        Carousel : Carousel,
-        CarouselSlide : CarouselSlide,
+        Carousel,
+        CarouselSlide,
     }
 }
 </script>
